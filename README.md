@@ -25,12 +25,13 @@ This project serves as a starting point for exploring Flutter widgets and UI cus
 
 ---
 ### Original Output
-![Original Output](OriginalCode_Screenshot/original (1).png)
-![Original Output](OriginalCode_Screenshot/original (2).png)
-![Modified Output](ModifiedCode_Screenshot/modified (1).png)
-![Modified Output](ModifiedCode_Screenshot/modified (2).png)
+![Original Output 1](OriginalCode_Screenshot/original (1).png)
+![Original Output 2](OriginalCode_Screenshot/original (2).png)
 
 ### Modified Output
+![Modified Output 1](ModifiedCode_Screenshot/modified (1).png)
+![Modified Output 2](ModifiedCode_Screenshot/modified (2).png)
+
 
 #### Modified (Using Controller)
 - Uses `TextEditingController` to read TextField input.
