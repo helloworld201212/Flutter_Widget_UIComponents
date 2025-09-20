@@ -29,8 +29,8 @@ This project serves as a starting point for exploring Flutter widgets and UI cus
 ![Original Output 2](OriginalCode_Screenshot/original (2).png)
 
 ### Modified Output
-![Modified Output 1](ModifiedCode_Screenshot/modified (1).png)
-![Modified Output 2](ModifiedCode_Screenshot/modified (2).png)
+![Modified Output 1](ModifiedCode_Screenshot/modified (Using onChanged).png)
+![Modified Output 2](ModifiedCode_Screenshot/modified (Using Controller).png)
 
 
 #### Modified (Using Controller)
