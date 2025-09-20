@@ -1,85 +1,124 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'GridView',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
+      title: 'Checkbox Demo',
+      theme: ThemeData(primarySwatch: Colors.teal),
       debugShowCheckedModeBanner: false,
+      home: const HomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  // Rainbow colors list (9 items)
-  final List<Map<String, dynamic>> rainbowColors = [
-    {"name": "Red", "color": Colors.red},
-    {"name": "Orange", "color": Colors.orange},
-    {"name": "Yellow", "color": Colors.yellow},
-    {"name": "Green", "color": Colors.green},
-    {"name": "Blue", "color": Colors.blue},
-    {"name": "Indigo", "color": Colors.indigo},
-    {"name": "Violet", "color": Colors.purple},
-    {"name": "Black", "color": Colors.black},
-    {"name": "Pink", "color": Colors.pink},
-  ];
+class _HomePageState extends State<HomePage> {
+  bool searchingChecked = false;
+  bool sortingChecked = false;
+
+  void _showSnack(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), duration: const Duration(seconds: 1)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("GridView"),
-        backgroundColor: Colors.deepPurple,
-        foregroundColor: Colors.white,
+        title: const Text('Flutter - Checkbox Widget'),
+        backgroundColor: Colors.teal,
       ),
-      body: GridView.builder(
-        padding: const EdgeInsets.all(10),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3, // 3 columns
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          childAspectRatio: 1, // square-shaped grids
-        ),
-        itemCount: rainbowColors.length,
-        itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-              color: rainbowColors[index]["color"],
-              borderRadius: BorderRadius.circular(12), // rounded corners
-            ),
-            child: Center(
-              child: Text(
-                rainbowColors[index]["name"],
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  shadows: [
-                    Shadow(
-                      blurRadius: 3,
-                      color: Colors.black,
-                      offset: Offset(1, 1),
+      backgroundColor: Colors.grey[200],
+      body: Center(
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          elevation: 8,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: SizedBox(
+              width: 350,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Algorithms',
+                    style: TextStyle(
+                      color: Colors.pink,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
-                textAlign: TextAlign.center,
+                  ),
+                  const Divider(height: 30, thickness: 1),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Searching Algorithm Library',
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      Checkbox(
+                        value: searchingChecked,
+                        activeColor: Colors.red,
+                        onChanged: (val) {
+                          setState(() => searchingChecked = val ?? false);
+                          _showSnack(
+                            searchingChecked
+                                ? 'Searching enabled'
+                                : 'Searching disabled',
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Sorting Algorithm Library',
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      Checkbox(
+                        value: sortingChecked,
+                        activeColor: Colors.blue,
+                        onChanged: (val) {
+                          setState(() => sortingChecked = val ?? false);
+                          _showSnack(
+                            sortingChecked
+                                ? 'Sorting enabled'
+                                : 'Sorting disabled',
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Status: '
+                    '${searchingChecked ? "Searching ON" : "Searching OFF"} | '
+                    '${sortingChecked ? "Sorting ON" : "Sorting OFF"}',
+                    style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                  ),
+                ],
               ),
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }

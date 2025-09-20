@@ -1,51 +1,80 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'FAB',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
-      debugShowCheckedModeBanner: false,
-    );
+    return MaterialApp(home: HomePage());
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
+  bool? value = false; // Initialize as nullable bool for null safety
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "GridView.count()",
+        title: const Text('Flutter - Checkbox Widget'),
+        backgroundColor: Colors.greenAccent[400],
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          tooltip: 'Menu',
+          onPressed: () {},
         ),
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
       ),
-      body: GridView.count(
-        crossAxisCount: 3, // number of columns
-        crossAxisSpacing: 10.0,
-        mainAxisSpacing: 10.0,
-        padding: EdgeInsets.all(10.0),
-        children: List.generate(20, (index) {
-          return Container(
-            color: Colors.green,
-          );
-        }),
+      body: Center(
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: SizedBox(
+              width: 430,
+              height: 700,
+              child: Column(
+                children: [
+                  Text(
+                    'Algorithms',
+                    style: TextStyle(
+                      color: Colors.greenAccent[400],
+                      fontSize: 30,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: <Widget>[
+                      const SizedBox(width: 10),
+                      const Text(
+                        'Library Implementation Of Searching Algorithm: ',
+                        style: TextStyle(fontSize: 17.0),
+                      ),
+                      const SizedBox(width: 10),
+                      Checkbox(
+                        tristate: true, // Example with tristate
+                        value: value,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            value = newValue;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
 }
-
