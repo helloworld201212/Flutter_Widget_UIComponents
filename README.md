@@ -1,4 +1,4 @@
-##Flutter Widget UI Components 
+# Flutter Widget UI Components 
 
 A Flutter project demonstrating **TextField input handling** and widget customization.  
 This project shows both **Original** and **Modified** implementations using **Controller** and **onChanged** methods.
@@ -24,10 +24,11 @@ This project serves as a starting point for exploring Flutter widgets and UI cus
 - Real-time UI updates and state management
 
 ---
-
 ### Original Output
-![Original Output 1](OriginalCode_Screenshot/original (1).png)
-![Original Output 2](OriginalCode_Screenshot/original (2).png)
+![Original Output](OriginalCode_Screenshot/original (1).png)
+![Original Output](OriginalCode_Screenshot/original (2).png)
+![Modified Output](ModifiedCode_Screenshot/modified (1).png)
+![Modified Output](ModifiedCode_Screenshot/modified (2).png)
 
 ### Modified Output
 
