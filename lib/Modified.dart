@@ -8,116 +8,104 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Checkbox Demo',
-      theme: ThemeData(primarySwatch: Colors.teal),
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+            elevation: 6,
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
+      ),
+      home: const Home(),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<Home> createState() => _HomeState();
 }
 
-class _HomePageState extends State<HomePage> {
-  bool searchingChecked = false;
-  bool sortingChecked = false;
+class _HomeState extends State<Home> {
+  final TextEditingController _controller = TextEditingController();
+  String _displayText = "No value entered";
 
-  void _showSnack(String message) {
+  void _handleSubmit() {
+    final text = _controller.text.trim();
+
+    if (text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter some text'),
+          backgroundColor: Colors.redAccent,
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      _displayText = text;
+    });
+
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), duration: const Duration(seconds: 1)),
+      SnackBar(
+        content: Text('You entered: $text'),
+        backgroundColor: Colors.green,
+        duration: const Duration(seconds: 2),
+      ),
     );
+
+    _controller.clear();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter - Checkbox Widget'),
-        backgroundColor: Colors.teal,
+        title: const Text('Retrieve Data From TextFields in Flutter'),
       ),
-      backgroundColor: Colors.grey[200],
-      body: Center(
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          elevation: 8,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: SizedBox(
-              width: 350,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Algorithms',
-                    style: TextStyle(
-                      color: Colors.pink,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Divider(height: 30, thickness: 1),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Searching Algorithm Library',
-                          style: const TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      Checkbox(
-                        value: searchingChecked,
-                        activeColor: Colors.red,
-                        onChanged: (val) {
-                          setState(() => searchingChecked = val ?? false);
-                          _showSnack(
-                            searchingChecked
-                                ? 'Searching enabled'
-                                : 'Searching disabled',
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Sorting Algorithm Library',
-                          style: const TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      Checkbox(
-                        value: sortingChecked,
-                        activeColor: Colors.blue,
-                        onChanged: (val) {
-                          setState(() => sortingChecked = val ?? false);
-                          _showSnack(
-                            sortingChecked
-                                ? 'Sorting enabled'
-                                : 'Sorting disabled',
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    'Status: '
-                    '${searchingChecked ? "Searching ON" : "Searching OFF"} | '
-                    '${sortingChecked ? "Sorting ON" : "Sorting OFF"}',
-                    style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-                  ),
-                ],
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextField(
+              controller: _controller,
+              decoration: InputDecoration(
+                labelText: 'Enter a title',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                filled: true,
+                fillColor: Colors.green.shade50,
               ),
+              onSubmitted: (_) => _handleSubmit(),
             ),
-          ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: _handleSubmit,
+              child: const Text('Submit'),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              _displayText,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );

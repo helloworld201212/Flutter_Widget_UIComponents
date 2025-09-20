@@ -1,79 +1,72 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomePage());
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Home(),
+    );
   }
 }
 
-class HomePage extends StatefulWidget {
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
   @override
-  _HomePageState createState() => _HomePageState();
+  // ignore: library_private_types_in_public_api
+  _HomeState createState() => _HomeState();
 }
 
-class _HomePageState extends State<HomePage> {
-  bool? value = false; // Initialize as nullable bool for null safety
+class _HomeState extends State<Home> {
+  // var to store
+  // onChanged callback
+  late String title;
+  String text = "No Value Entered";
+
+  void _setText() {
+    setState(() {
+      text = title;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter - Checkbox Widget'),
-        backgroundColor: Colors.greenAccent[400],
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          tooltip: 'Menu',
-          onPressed: () {},
-        ),
+        title: const Text('GeeksforGeeks'),
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
       ),
-      body: Center(
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: SizedBox(
-              width: 430,
-              height: 700,
-              child: Column(
-                children: [
-                  Text(
-                    'Algorithms',
-                    style: TextStyle(
-                      color: Colors.greenAccent[400],
-                      fontSize: 30,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: <Widget>[
-                      const SizedBox(width: 10),
-                      const Text(
-                        'Library Implementation Of Searching Algorithm: ',
-                        style: TextStyle(fontSize: 17.0),
-                      ),
-                      const SizedBox(width: 10),
-                      Checkbox(
-                        tristate: true, // Example with tristate
-                        value: value,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            value = newValue;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: TextField(
+              decoration: const InputDecoration(labelText: 'Title'),
+              onChanged: (value) => title = value,
             ),
           ),
-        ),
+          const SizedBox(
+            height: 8,
+          ),
+          ElevatedButton(
+              onPressed: _setText,
+              style: ButtonStyle(
+                elevation: WidgetStateProperty.all(8),
+                backgroundColor: WidgetStateProperty.all(Colors.green),
+                foregroundColor: WidgetStateProperty.all(Colors.white),
+              ),
+              child: const Text('Submit')),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(text),
+        ],
       ),
     );
   }
